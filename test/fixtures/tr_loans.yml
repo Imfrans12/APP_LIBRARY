@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  member_name: MyString
+  member_phone: MyString
+  member_email: MyString
+  ms_book_id: 1
+  is_active: false
+
+two:
+  member_name: MyString
+  member_phone: MyString
+  member_email: MyString
+  ms_book_id: 1
+  is_active: false

@@ -1,0 +1,2 @@
+class TrLoan < ApplicationRecord
+end

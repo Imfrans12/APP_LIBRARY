@@ -1,0 +1,2 @@
+class MsBook < ApplicationRecord
+end

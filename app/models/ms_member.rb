@@ -1,0 +1,2 @@
+class MsMember < ApplicationRecord
+end
