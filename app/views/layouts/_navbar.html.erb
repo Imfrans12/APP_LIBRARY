@@ -1,0 +1,42 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="<%= root_path %>">
+      <%= image_tag "nutrifood-logo-small.webp",class: "d-inline-block", width: "25%" %>
+      <span>App Library</span>
+    </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/ms_members">Member</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ms_books">Book</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="/tr_loans">Loan <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ms_publishers">Publisher</a>
+      </li>
+    </ul>
+  </div>
+  <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-user"></i> User Name
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to 'logout', destroy_ms_user_session_path, method: :delete, class: "dropdown-item" %>
+            </div>
+          </li>
+</nav>
+
+    <% flash.each do |type, msg| %>
+      <div class="alert alert-info">
+        <%= msg %>
+      </div>
+    <% end %>

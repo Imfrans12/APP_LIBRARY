@@ -7,9 +7,14 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
   </head>
-
-  <body>
+   <% if ms_user_signed_in? %>
+ <%= render 'layouts/navbar'%>
+ <% end %>
+<body>
+    <div class="container-fluid">
     <%= yield %>
+  </div>
   </body>
 </html>

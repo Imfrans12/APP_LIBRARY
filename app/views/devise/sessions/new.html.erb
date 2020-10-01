@@ -1,0 +1,60 @@
+<div class="website-logo">
+            <%= link_to "library", root_path, class: :logo %>
+            <p>Mari Cerdas Bersama</p>
+        </div>
+
+        <div class="row">
+            <div class="img-holder">
+                <div class="info-holder">
+                    
+                    <%= image_tag "bg.svg", alt: "background" %>
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                            <h2 class="text-center">
+                                
+                                <%= image_tag "nutrifood-logo.webp",alt: "Logo Nutrifood", class: "company-logo" %>
+                            </h2>
+                            <br>
+                            <div class="login-wrap"> 
+                              <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+   <div class="form-group form-group__icon mt-4">
+    <%= f.label :email, class: "sr-only" %>
+    <i class="fa fa-user"></i>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'Email' ,class: 'form-control' %>
+  </div>
+
+   <div class="form-group form-group__icon mt-4">
+    <%= f.label :password, class: "sr-only" %>
+     <i class="fa fa-lock"></i>
+    <%= f.password_field :password, autocomplete: "current-password", placeholder: 'Password' ,class: 'form-control' %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="field">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Log in", class: "btn btn-success btn-block" %>
+  </div>
+<% end %>
+                                
+                                <div class="form-group">
+                                    <%= render "devise/shared/links" %>
+                                </div>
+                               
+                               
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
