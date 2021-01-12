@@ -1,6 +1,9 @@
 class TrLoansController < ApplicationController
+  skip_before_action :verify_authenticity_token, only:[:update]
   def index
-      @tr_loans = TrLoan.where(is_active: true) 
+      @tr_loans_borrow = TrLoan.where(:status => 'Borrow').last(1)
+      @tr_loans_return = TrLoan.where(:status => 'Return').last(1)
+      @tr_loans_form = TrLoan.new
   end
 
    def show
@@ -27,9 +30,9 @@ class TrLoansController < ApplicationController
   end
 
   def update
-    @tr_loans = TrLoan.find(params[:id])
-
-    if @tr_loans.update(tr_loans_params)
+    tr_loans = TrLoan.where(:id => params[:id])
+    tr_loans.update(tr_loans_params)
+    if tr_loans
       redirect_to tr_loans_path, notice: "Data Successfuly Edited"
     else
       render 'edit'
@@ -47,6 +50,6 @@ class TrLoansController < ApplicationController
 
   private
   def tr_loans_params
-    params.require(:tr_loan).permit(:id, :member_name, :member_phone, :member_email, :ms_book_id)
+    params.permit(:id, :member_name, :member_phone, :member_email, :ms_book_id, :status)
   end
 end

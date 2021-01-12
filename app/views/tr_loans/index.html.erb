@@ -1,31 +1,149 @@
-<div style="float: right">
- <%= link_to 'Add Data', new_tr_loan_path, class: 'btn btn-success' %>
- </div>
-<table class="table table-bordered">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Member Name</th>
-      <th scope="col">Member Phone</th>
-      <th scope="col">Member Email</th>
-      <th scope="col">Ms_book_id</th>
-      <th scope="col" width="auto">Action</th>
-    </tr>
-  </thead>
-<% @tr_loans.each do |tr_loan|%>
-<tbody>
-<tr>
-      <th scope="row"><%= tr_loan.id%></th>
-      <td> <%= tr_loan.member_name %> </td>
-      <td> <%= tr_loan.member_phone %> </td>
-      <td> <%= tr_loan.member_email %> </td>
-      <td> <%= tr_loan.ms_book_id %> </td>
-     <td class="text-center">
-     		<%= link_to 'Delete',tr_loan_path(tr_loan), method: :delete, data: {confirm: 'Delete Data ? '}, class: 'btn btn-danger' %>
-              <%= link_to 'Detail', tr_loan_path(tr_loan), class: 'btn btn-light' %>
-              <%= link_to 'Edit', edit_tr_loan_path(tr_loan), class: 'btn btn-primary' %>
-              
-            </td>
-      <% end %>
-</tbody>
-</tr>
+<br>
+<h5>Peminjaman Terakhir</h5>  
+<% @tr_loans_borrow.each do |t|%>
+<% book_id = t.ms_book_id %>
+<% @books = MsBook.find(book_id) %>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body" style="background-color: #4cd137">
+        <h5 class="card-title">Member Name</h5>
+        <p class="card-text">
+          <%= t.member_name %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body" style="background-color: #e1b12c">
+        <h5 class="card-title">Member Phone</h5>
+        <p class="card-text">
+          <%= t.member_phone %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body" style="background-color: #44bd32">
+        <h5 class="card-title">Member Email</h5>
+        <p class="card-text">
+          <%= t.member_email %>
+        </p>
+        
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body" style="background-color: #fbc531">
+        <h5 class="card-title">Book Name</h5>
+        <p class="card-text">
+          <%= @books.name %>
+        </p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+<br>
+<br>
+<h5>Pengembalian Terakhir</h5>  
+<% @tr_loans_return.each do |g|%>
+<% book_id = g.ms_book_id %>
+<% @book = MsBook.find(book_id) %>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body" style="background-color: #4cd137">
+        <h5 class="card-title">Member Name</h5>
+        <p class="card-text">
+          <%= g.member_name %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body" style="background-color: #e1b12c">
+        <h5 class="card-title">Member Phone</h5>
+        <p class="card-text">
+          <%= g.member_phone %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body" style="background-color: #44bd32">
+        <h5 class="card-title">Member Email</h5>
+        <p class="card-text">
+          <%= g.member_email %>
+        </p>
+        
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body" style="background-color: #fbc531">
+        <h5 class="card-title">Book Name</h5>
+        <p class="card-text">
+          <%= @book.name %>
+        </p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
+<% end %>
+
+<script >
+  this.App = {};
+App.cable = ActionCable.createConsumer("/cable");
+   App.messages = App.cable.subscriptions.create('HomeChannel', {  
+        received: function(data) {
+            var result = data.tr_loan;
+            var name = result.member_name;
+            var email = result.member_email;
+            var phone = result.member_phone;
+            var book = result.ms_book_id;
+            var status = result.status;
+            console.log(result);
+            if (status == 'Borrow'){
+            $("#modal-window").find(".modal-content").html("<%= j (render 'edit') %>");
+            var url = $("#tr_loans_form").attr('action')
+            $("#tr_loans_form").attr('action', `${url}/${result.id}`);
+            $("#name").text(name);
+            $("#email").text(email);
+            $("#phone").text(phone);
+            $("#book").text(book);
+            $("#modal-window").modal({backdrop: 'static', keyboard: false});
+          }
+            else if (status == 'Return'){
+            $("#modal-window").find(".modal-content").html("<%= j (render 'edits') %>");
+            var url = $("#tr_loans_form").attr('action')
+            $("#tr_loans_form").attr('action', `${url}/${result.id}`);
+            $("#name").text(name);
+            $("#email").text(email);
+            $("#phone").text(phone);
+            $("#book").text(book);
+            $("#modal-window").modal({backdrop: 'static', keyboard: false});
+            }  
+        },
+        
+    });
+</script>

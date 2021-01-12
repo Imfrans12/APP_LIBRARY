@@ -1,0 +1,38 @@
+<div class="modal-header text-center">
+  <h4 class="modal-title w-100" id="myModalLabel">Borrow Book </h4>
+</div>
+<div class="modal-body">
+<div class="form-group ">
+	<%= label_tag(:name,"Member Name ",class:'col-sm-3 col-form-label') %>
+	<label class="col-form-label">:</label>
+	<label class= 'col-sm-2 col-form-label' id="name"></label>
+	</div>
+<div class="form-group ">
+	<%= label_tag(:member_book,"Member Phone ",class:'col-sm-3 col-form-label') %>
+	<label class="col-form-label">:</label>
+	<label class= 'col-sm-2 col-form-label' id="phone"></label>
+</div>
+<div class="form-group ">
+	<%= label_tag(:member_email,"Member Email ",class:'col-sm-3 col-form-label') %>
+	<label class="col-form-label">:</label>
+	<label class= 'col-sm-2 col-form-label'id="email"></label>
+</div>
+<div class="form-group ">
+	<%= label_tag(:book_name,"Book Name ",class:'col-sm-3 col-form-label') %>
+	<label class="col-form-label">:</label>
+	<label class= 'col-sm-2 col-form-label' id="book"></label>
+</div>
+
+	<%= form_for @tr_loans_form, method: :patch, scope: 'tr_loans' , html:{ id: 'tr_loans_form'} do |f| %>
+	<%= f.hidden_field :status, value: 'Borrow' %>
+	<br>
+	<br>
+	<div class="text-center">
+		<%= f.submit :save, class:'btn btn-success' %>
+	</div>
+	<% end %>
+</div>
+<script >
+
+
+</script>

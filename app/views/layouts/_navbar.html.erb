@@ -1,7 +1,5 @@
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="<%= root_path %>">
-      <%= image_tag "nutrifood-logo-small.webp",class: "d-inline-block", width: "25%" %>
       <span>App Library</span>
     </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,15 +22,17 @@
       </li>
     </ul>
   </div>
-  <li class="nav-item dropdown">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-user"></i> User Name
+            <%= current_ms_user.name %>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to 'logout', destroy_ms_user_session_path, method: :delete, class: "dropdown-item" %>
+              <%= link_to('Logout', destroy_ms_user_session_path, method: :delete, class: 'dropdown-item') %> 
             </div>
           </li>
+        </ul>
 </nav>
 
     <% flash.each do |type, msg| %>
