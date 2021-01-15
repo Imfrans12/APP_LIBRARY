@@ -122,6 +122,9 @@ App.cable = ActionCable.createConsumer("/cable");
             var phone = result.member_phone;
             var book = result.ms_book_id;
             var status = result.status;
+            var today_date = result.borrow_date;
+            var duration = result.duration + ' ' +' days';
+            var bill = result.bill;
             console.log(result);
             if (status == 'Borrow'){
             $("#modal-window").find(".modal-content").html("<%= j (render 'edit') %>");
@@ -131,6 +134,7 @@ App.cable = ActionCable.createConsumer("/cable");
             $("#email").text(email);
             $("#phone").text(phone);
             $("#book").text(book);
+            $("#borrow_date").text(today_date)
             $("#modal-window").modal({backdrop: 'static', keyboard: false});
           }
             else if (status == 'Return'){
@@ -141,6 +145,10 @@ App.cable = ActionCable.createConsumer("/cable");
             $("#email").text(email);
             $("#phone").text(phone);
             $("#book").text(book);
+            $("#borrow_date").text(today_date)
+            $("#return_date").text(today_date)
+            $("#duration").text(duration)
+            $("#bill").text(bill)
             $("#modal-window").modal({backdrop: 'static', keyboard: false});
             }  
         },

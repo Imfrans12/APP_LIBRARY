@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get "loan", to: "home#index"
   get "loan/:id", to: "home#show"
   post "loan", to: "home#create"
-
+  get "report", to: "tr_loans#report"
   root "tr_loans#index"
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

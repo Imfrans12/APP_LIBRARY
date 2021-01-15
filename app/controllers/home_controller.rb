@@ -28,13 +28,15 @@ class HomeController < ApplicationController
 		member = MsMember.find_by_id(params[:member_id])
 		book_id = params[:ms_book_id]
 		status = params[:status]
+		today_date = params[:borrow_date]
 		if status == 'Borrow'
 		@tr_loan = TrLoan.new(
 			:member_name => member.name,
 			:member_phone => member.phone,
 			:member_email => member.email,
 			:ms_book_id => 	book_id,
-			:status => status
+			:status => status,
+			:borrow_date => today_date
 			)
 
 		if @tr_loan.save
@@ -52,12 +54,27 @@ class HomeController < ApplicationController
 		end
 		elsif status == 'Return'
 			@tr_loan = TrLoan.find_by ms_book_id: params[:ms_book_id], status: 'Borrow'
+			borrow_date = @tr_loan.borrow_date
+			borrow_dates = borrow_date.to_date
+			today_dates = today_date.to_date
+			duration = @tr_loan.duration.to_i
+			gap = (today_dates - borrow_dates).to_i
+			gap_c = gap - duration
+			if gap > duration
+				bill = gap_c * 1000
+			elsif gap <= duration
+				bill = 0
+			end	
 			@tr_loan.update(
 				:member_name => member.name,
 				:member_phone => member.phone,
 				:member_email => member.email,
 				:ms_book_id => 	book_id,
-				:status => status)
+				:status => status,
+				:duration => duration,
+				:bill => bill,
+				:borrow_date => borrow_date,
+				:return_date => today_date)
 			ActionCable.server.broadcast 'loan',
               tr_loan: @tr_loan
 			render json:{

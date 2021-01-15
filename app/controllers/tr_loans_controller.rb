@@ -1,8 +1,8 @@
 class TrLoansController < ApplicationController
   skip_before_action :verify_authenticity_token, only:[:update]
   def index
-      @tr_loans_borrow = TrLoan.where(:status => 'Borrow').last(1)
-      @tr_loans_return = TrLoan.where(:status => 'Return').last(1)
+      @tr_loans_borrow = TrLoan.last(1)
+      @tr_loans_return = TrLoan.where.not(:return_date => nil).last(1)
       @tr_loans_form = TrLoan.new
   end
 
@@ -39,6 +39,9 @@ class TrLoansController < ApplicationController
     end
 
   end
+  def report
+    @tr_loans = TrLoan.all
+  end
 
   def destroy
     @tr_loans = TrLoan.find(params[:id])
@@ -50,6 +53,6 @@ class TrLoansController < ApplicationController
 
   private
   def tr_loans_params
-    params.permit(:id, :member_name, :member_phone, :member_email, :ms_book_id, :status)
+    params.require(:tr_loan).permit(:id, :member_name, :member_phone, :member_email, :ms_book_id, :status, :duration)
   end
 end
